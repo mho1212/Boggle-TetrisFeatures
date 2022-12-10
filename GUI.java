@@ -1,3 +1,4 @@
+import Fonts.Fonts;
 import boggle.Dictionary;
 import boggle.*;
 
@@ -14,12 +15,24 @@ public class GUI implements ActionListener {
     JLabel label, label2, label3, roundStats, human, computer, wordsFound, foundNum, roundScore, scoreNum, playAgain,
     gameStats, rounds, enterWords, totalScore, averageWords, thanks;
     JTextArea t, t2, t3, t4, t5, t6;
+    Fonts font;
     int boardSize;
     BoggleData d = new BoggleData();
     BoggleGrid g = new BoggleGrid(boardSize);
     Dictionary boggleDict = new Dictionary("wordlist.txt");
     Map<String, ArrayList<Position>> w = new HashMap<String, ArrayList<Position>>();
     public GUI(){
+        FontFactory fontFactory = new FontFactory();
+        Scanner s = new Scanner(System.in);
+        System.out.println("Choose Font: (Arial, Courier, Helvetica, Verdana)");
+        String word = s.nextLine();
+        while(!Objects.equals(word, "Arial") && !Objects.equals(word, "Courier") && !Objects.equals(word,
+                "Helvetica") && !Objects.equals(word, "Verdana")){
+            System.out.println("Please try again.");
+            word = s.nextLine();
+        }
+        font = fontFactory.createFont(word);
+
         frame = new JFrame("Boggle");
         frame.setVisible(true);
         frame.setSize(600,400);
@@ -28,11 +41,11 @@ public class GUI implements ActionListener {
         frame.setLayout(null);
 
         label = new JLabel("Welcome to Boggle!");
-        label.setFont(new Font("Arial", Font.BOLD, 18));
+        label.setFont(new Font(font.getName(), Font.BOLD, 18));
         label.setBounds(10, 0, 300 ,30);
 
         startButton = new JButton("Start Game");
-        startButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        startButton.setFont(new Font(font.getName(), Font.PLAIN, 12));
         startButton.setBounds(10, 100, 150, 30);
         startButton.addActionListener(this);
 
@@ -48,7 +61,7 @@ public class GUI implements ActionListener {
         frame.setVisible(false);
         frame.setVisible(true);
         label2 = new JLabel("Instructions");
-        label2.setFont(new Font("Arial", Font.BOLD, 18));
+        label2.setFont(new Font(font.getName(), Font.BOLD, 18));
         label2.setBounds(10, 10, 200, 30);
         t = new JTextArea("The Boggle board contains a grid of letters that are randomly placed.\n" +
                 "We're both going to try to find words in this grid by joining the letters.\n" +
@@ -60,10 +73,10 @@ public class GUI implements ActionListener {
                 "words earn 2 points, and so on. To play, enter a word into the text box \n" +
                 "and press the enter button. After you find as many word as you can, \n" +
                 "press the finish button and I will find all the remaining words.");
-        t.setFont(new Font("Arial", Font.PLAIN, 14));
+        t.setFont(new Font(font.getName(), Font.PLAIN, 14));
         t.setBounds(10, 50, 565 ,200);
         nextButton = new JButton("Next");
-        nextButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        nextButton.setFont(new Font(font.getName(), Font.PLAIN, 12));
         nextButton.setBounds(10, 300, 150, 30);
         nextButton.addActionListener(this);
         frame.add(label2);
@@ -77,14 +90,14 @@ public class GUI implements ActionListener {
         frame.setVisible(false);
         frame.setVisible(true);
         t2 = new JTextArea("Press 1 to play on a big (5x5) grid; 2 to play on a small (4x4) one:");
-        t2.setFont(new Font("Arial", Font.PLAIN, 14));
+        t2.setFont(new Font(font.getName(), Font.PLAIN, 14));
         t2.setBounds(10, 10, 500, 30);
         oneButton = new JButton("1");
-        oneButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        oneButton.setFont(new Font(font.getName(), Font.PLAIN, 12));
         oneButton.setBounds(10 , 50, 50, 30);
         oneButton.addActionListener(this);
         twoButton = new JButton("2");
-        twoButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        twoButton.setFont(new Font(font.getName(), Font.PLAIN, 12));
         twoButton.setBounds(70 , 50, 50, 30);
         twoButton.addActionListener(this);
         frame.add(t2);
@@ -98,14 +111,14 @@ public class GUI implements ActionListener {
         frame.setVisible(false);
         frame.setVisible(true);
         t3 = new JTextArea("Press 1 to randomly assign letters to the grid; 2 to provide your own.");
-        t3.setFont(new Font("Arial", Font.PLAIN, 14));
+        t3.setFont(new Font(font.getName(), Font.PLAIN, 14));
         t3.setBounds(10, 10, 500, 30);
         oneButton2 = new JButton("1");
-        oneButton2.setFont(new Font("Arial", Font.PLAIN, 12));
+        oneButton2.setFont(new Font(font.getName(), Font.PLAIN, 12));
         oneButton2.setBounds(10 , 50, 50, 30);
         oneButton2.addActionListener(this);
         twoButton2 = new JButton("2");
-        twoButton2.setFont(new Font("Arial", Font.PLAIN, 12));
+        twoButton2.setFont(new Font(font.getName(), Font.PLAIN, 12));
         twoButton2.setBounds(70 , 50, 50, 30);
         twoButton2.addActionListener(this);
         frame.add(t3);
@@ -124,13 +137,13 @@ public class GUI implements ActionListener {
         else{
             enterWords = new JLabel("Please enter 25 letters for your grid:");
         }
-        enterWords.setFont(new Font("Arial", Font.PLAIN, 14));
+        enterWords.setFont(new Font(font.getName(), Font.PLAIN, 14));
         enterWords.setBounds(10, 10, 300, 30);
         t6 = new JTextArea();
-        t6.setFont(new Font("Arial", Font.PLAIN, 14));
+        t6.setFont(new Font(font.getName(), Font.PLAIN, 14));
         t6.setBounds(310, 10, 250, 25);
         confirmButton = new JButton("Confirm");
-        confirmButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        confirmButton.setFont(new Font(font.getName(), Font.PLAIN, 14));
         confirmButton.setBounds(310, 40, 100, 30);
         confirmButton.addActionListener(this);
         frame.add(enterWords);
@@ -139,20 +152,20 @@ public class GUI implements ActionListener {
     }
     public void BoardFrame(){
         t4 = new JTextArea(g.toString());
-        t4.setFont(new Font("Arial", Font.PLAIN, 30));
+        t4.setFont(new Font(font.getName(), Font.PLAIN, 30));
         t4.setBounds(10, 10, 200,200);
         label3 = new JLabel("Please enter a word:");
-        label3.setFont(new Font("Arial", Font.BOLD, 14));
+        label3.setFont(new Font(font.getName(), Font.BOLD, 14));
         label3.setBounds(220, 10, 200, 30);
         t5 = new JTextArea();
-        t5.setFont(new Font("Arial", Font.PLAIN, 14));
+        t5.setFont(new Font(font.getName(), Font.PLAIN, 14));
         t5.setBounds(220, 50, 200, 25);
         enterButton = new JButton("Enter");
-        enterButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        enterButton.setFont(new Font(font.getName(), Font.PLAIN, 14));
         enterButton.setBounds(220, 85, 80, 30);
         enterButton.addActionListener(this);
         finishButton = new JButton("Finish");
-        finishButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        finishButton.setFont(new Font(font.getName(), Font.PLAIN, 14));
         finishButton.setBounds(310, 85, 80, 30);
         finishButton.addActionListener(this);
         frame.add(t4);
@@ -163,39 +176,39 @@ public class GUI implements ActionListener {
     }
     public void EndRoundFrame(){
         roundStats = new JLabel("Round Stats");
-        roundStats.setFont(new Font("Arial", Font.BOLD, 18));
+        roundStats.setFont(new Font(font.getName(), Font.BOLD, 18));
         roundStats.setBounds(10, 10, 200, 30);
         human = new JLabel("Human");
-        human.setFont(new Font("Arial", Font.BOLD, 14));
+        human.setFont(new Font(font.getName(), Font.BOLD, 14));
         human.setBounds(175, 50, 100, 30);
         computer = new JLabel("Computer");
-        computer.setFont(new Font("Arial", Font.BOLD, 14));
+        computer.setFont(new Font(font.getName(), Font.BOLD, 14));
         computer.setBounds(325, 50, 100, 30);
         wordsFound = new JLabel("Words Found");
-        wordsFound.setFont(new Font("Arial", Font.BOLD, 14));
+        wordsFound.setFont(new Font(font.getName(), Font.BOLD, 14));
         wordsFound.setBounds(10, 90, 150, 30);
         foundNum = new JLabel(String.valueOf(d.gameStats.getPlayerWords().size()) + "\t \t \t \t \t \t \t" +
                 "\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t" +
                 String.valueOf(w.size()-d.gameStats.getPlayerWords().size()));
-        foundNum.setFont(new Font("Arial", Font.PLAIN, 14));
+        foundNum.setFont(new Font(font.getName(), Font.PLAIN, 14));
         foundNum.setBounds(180, 90, 300, 30);
         roundScore = new JLabel("Round Score");
-        roundScore.setFont(new Font("Arial", Font.BOLD, 14));
+        roundScore.setFont(new Font(font.getName(), Font.BOLD, 14));
         roundScore.setBounds(10, 130, 100, 30);
         scoreNum = new JLabel(String.valueOf(d.gameStats.getScore()) + "\t \t \t \t \t \t \t" +
                 "\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t" +
                 String.valueOf(d.gameStats.getcScore()));
-        scoreNum.setFont(new Font("Arial", Font.PLAIN, 14));
+        scoreNum.setFont(new Font(font.getName(), Font.PLAIN, 14));
         scoreNum.setBounds(180, 130, 300, 30);
         playAgain = new JLabel("Play Again?");
-        playAgain.setFont(new Font("Arial", Font.BOLD, 14));
+        playAgain.setFont(new Font(font.getName(), Font.BOLD, 14));
         playAgain.setBounds(10, 200, 100, 30);
         yesButton = new JButton("Yes");
-        yesButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        yesButton.setFont(new Font(font.getName(), Font.PLAIN, 14));
         yesButton.setBounds(110, 200, 80, 30);
         yesButton.addActionListener(this);
         noButton = new JButton("No");
-        noButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        noButton.setFont(new Font(font.getName(), Font.PLAIN, 14));
         noButton.setBounds(200, 200, 80, 30);
         noButton.addActionListener(this);
         frame.add(roundStats);
@@ -212,35 +225,35 @@ public class GUI implements ActionListener {
     }
     public void EndGameFrame(){
         gameStats = new JLabel("Game Stats");
-        gameStats.setFont(new Font("Arial", Font.BOLD, 18));
+        gameStats.setFont(new Font(font.getName(), Font.BOLD, 18));
         gameStats.setBounds(10, 10, 200, 30);
         rounds = new JLabel("Rounds Played:" + "\t \t \t" + d.gameStats.getRound());
-        rounds.setFont(new Font("Arial", Font.BOLD, 14));
+        rounds.setFont(new Font(font.getName(), Font.BOLD, 14));
         rounds.setBounds(10, 50, 200, 30);
         human = new JLabel("Human");
-        human.setFont(new Font("Arial", Font.BOLD, 14));
+        human.setFont(new Font(font.getName(), Font.BOLD, 14));
         human.setBounds(175, 90, 100, 30);
         computer = new JLabel("Computer");
-        computer.setFont(new Font("Arial", Font.BOLD, 14));
+        computer.setFont(new Font(font.getName(), Font.BOLD, 14));
         computer.setBounds(325, 90, 100, 30);
         totalScore = new JLabel("Total Score");
-        totalScore.setFont(new Font("Arial", Font.BOLD, 14));
+        totalScore.setFont(new Font(font.getName(), Font.BOLD, 14));
         totalScore.setBounds(10, 130, 100, 30);
         scoreNum = new JLabel(String.valueOf(d.gameStats.getScoreTotal()) + "\t \t \t \t \t \t \t" +
                 "\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t" +
                 String.valueOf(d.gameStats.getcScoreTotal()));
-        scoreNum.setFont(new Font("Arial", Font.PLAIN, 14));
+        scoreNum.setFont(new Font(font.getName(), Font.PLAIN, 14));
         scoreNum.setBounds(180, 130, 300, 30);
         averageWords = new JLabel("Average Words");
-        averageWords.setFont(new Font("Arial", Font.BOLD, 14));
+        averageWords.setFont(new Font(font.getName(), Font.BOLD, 14));
         averageWords.setBounds(10, 170, 120, 30);
         foundNum = new JLabel(d.gameStats.getAverageWords() + "\t \t \t \t \t \t \t" +
                 "\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t" +
                 d.gameStats.getcAverageWords());
-        foundNum.setFont(new Font("Arial", Font.PLAIN, 14));
+        foundNum.setFont(new Font(font.getName(), Font.PLAIN, 14));
         foundNum.setBounds(180, 170, 300, 30);
         thanks = new JLabel("Thanks for Playing!");
-        thanks.setFont(new Font("Arial", Font.BOLD, 18));
+        thanks.setFont(new Font(font.getName(), Font.BOLD, 18));
         thanks.setBounds(10, 250, 200, 30);
         frame.add(gameStats);
         frame.add(rounds);
