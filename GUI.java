@@ -21,6 +21,10 @@ public class GUI implements ActionListener {
     BoggleGrid g = new BoggleGrid(boardSize);
     Dictionary boggleDict = new Dictionary("wordlist.txt");
     Map<String, ArrayList<Position>> w = new HashMap<String, ArrayList<Position>>();
+
+    /**
+     * Asks user for a Font and is the StartFrame() of the GUI
+     */
     public GUI(){
         FontFactory fontFactory = new FontFactory();
         Scanner s = new Scanner(System.in);
@@ -55,6 +59,9 @@ public class GUI implements ActionListener {
     public static void main(String[] args){
         new GUI();
     }
+    /**
+     * InstructionFrame() of the GUI
+     */
     public void InstructionFrame(){
         label.setVisible(false);
         startButton.setVisible(false);
@@ -83,6 +90,11 @@ public class GUI implements ActionListener {
         frame.add(t);
         frame.add(nextButton);
     }
+    /**
+     * OptionFrames 1 2 and 3 for the GUI
+     * User can choose grid size
+     * User can choose between assigning random letters or providing their own
+     */
     public void OptionFrame(){
         label2.setVisible(false);
         t.setVisible(false);
@@ -150,6 +162,9 @@ public class GUI implements ActionListener {
         frame.add(t6);
         frame.add(confirmButton);
     }
+    /**
+     * BoardFrame() of the GUI which displays the board and allows user to enter in words
+     */
     public void BoardFrame(){
         t4 = new JTextArea(g.toString());
         t4.setFont(new Font(font.getName(), Font.PLAIN, 30));
@@ -174,6 +189,9 @@ public class GUI implements ActionListener {
         frame.add(enterButton);
         frame.add(finishButton);
     }
+    /**
+     * EndRoundFrame() of the GUI that displays the round stats of the user and computer players
+     */
     public void EndRoundFrame(){
         roundStats = new JLabel("Round Stats");
         roundStats.setFont(new Font(font.getName(), Font.BOLD, 18));
@@ -223,6 +241,9 @@ public class GUI implements ActionListener {
         frame.add(noButton);
         d.gameStats.endRound();
     }
+    /**
+     * EndGameFrame() of the GUI showing the total game stats of the user and computer players
+     */
     public void EndGameFrame(){
         gameStats = new JLabel("Game Stats");
         gameStats.setFont(new Font(font.getName(), Font.BOLD, 18));
@@ -265,6 +286,9 @@ public class GUI implements ActionListener {
         frame.add(foundNum);
         frame.add(thanks);
     }
+    /**
+     * Buttons that connect the frames together and also receive user input
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == startButton){
