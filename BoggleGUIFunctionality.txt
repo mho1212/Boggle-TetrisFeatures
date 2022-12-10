@@ -1,0 +1,7 @@
+Name: Boggle GUI Functionality
+ID: 1.2
+Owner: Monte
+Description: As a programmer, for a GUI to be complete, the functionality has to match the visuals.
+Implementation Details: Correctly receive user input in the GUI. Use the user input to update the stored data and calculate the round and game statistics. Finally, transfer the stored data and statistics into the corresponding frames to finish implementing the GUI.
+Priority: 1
+Effort: 2

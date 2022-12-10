@@ -1,0 +1,7 @@
+Name: Boggle GUI Visuals
+ID: 1.1
+Owner: Monte
+Description: As a programmer, to be able to implement some of our other features, visuals are needed for the GUI.
+Implementation Details: Create methods (frames) for each section of the game. Use buttons to combine the different sections to finish the visuals for the game. 
+Priority: 1
+Effort: 2

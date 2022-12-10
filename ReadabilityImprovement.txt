@@ -1,0 +1,7 @@
+Name: Readability Improvement
+ID: 1.3
+Owner: Monte
+Description: As a user, I want options of different fonts to improve readability for people like me struggling with dyslexia.
+Implementation Details: User is allowed to choose between 4 different fonts: Arial, Courier, Helvetica, and Verdana. Afterward, use a FontFactory to create the different font objects to be used in the visuals for the GUI. 
+Priority: 2
+Effort: 1
