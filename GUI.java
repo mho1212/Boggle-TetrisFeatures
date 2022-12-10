@@ -40,7 +40,7 @@ public class GUI implements ActionListener {
         frame.add(startButton);
     }
     public static void main(String[] args){
-        GUI a = new GUI();
+        new GUI();
     }
     public void InstructionFrame(){
         label.setVisible(false);
@@ -174,9 +174,19 @@ public class GUI implements ActionListener {
         wordsFound = new JLabel("Words Found");
         wordsFound.setFont(new Font("Arial", Font.BOLD, 14));
         wordsFound.setBounds(10, 90, 150, 30);
+        foundNum = new JLabel(String.valueOf(d.gameStats.getPlayerWords().size()) + "\t \t \t \t \t \t \t" +
+                "\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t" +
+                String.valueOf(w.size()-d.gameStats.getPlayerWords().size()));
+        foundNum.setFont(new Font("Arial", Font.PLAIN, 14));
+        foundNum.setBounds(180, 90, 300, 30);
         roundScore = new JLabel("Round Score");
         roundScore.setFont(new Font("Arial", Font.BOLD, 14));
         roundScore.setBounds(10, 130, 100, 30);
+        scoreNum = new JLabel(String.valueOf(d.gameStats.getScore()) + "\t \t \t \t \t \t \t" +
+                "\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t" +
+                String.valueOf(d.gameStats.getcScore()));
+        scoreNum.setFont(new Font("Arial", Font.PLAIN, 14));
+        scoreNum.setBounds(180, 130, 300, 30);
         playAgain = new JLabel("Play Again?");
         playAgain.setFont(new Font("Arial", Font.BOLD, 14));
         playAgain.setBounds(10, 200, 100, 30);
@@ -192,7 +202,9 @@ public class GUI implements ActionListener {
         frame.add(human);
         frame.add(computer);
         frame.add(wordsFound);
+        frame.add(foundNum);
         frame.add(roundScore);
+        frame.add(scoreNum);
         frame.add(playAgain);
         frame.add(yesButton);
         frame.add(noButton);
@@ -202,7 +214,7 @@ public class GUI implements ActionListener {
         gameStats = new JLabel("Game Stats");
         gameStats.setFont(new Font("Arial", Font.BOLD, 18));
         gameStats.setBounds(10, 10, 200, 30);
-        rounds = new JLabel("Rounds Played:" );
+        rounds = new JLabel("Rounds Played:" + "\t \t \t" + d.gameStats.getRound());
         rounds.setFont(new Font("Arial", Font.BOLD, 14));
         rounds.setBounds(10, 50, 200, 30);
         human = new JLabel("Human");
@@ -214,9 +226,19 @@ public class GUI implements ActionListener {
         totalScore = new JLabel("Total Score");
         totalScore.setFont(new Font("Arial", Font.BOLD, 14));
         totalScore.setBounds(10, 130, 100, 30);
+        scoreNum = new JLabel(String.valueOf(d.gameStats.getScoreTotal()) + "\t \t \t \t \t \t \t" +
+                "\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t" +
+                String.valueOf(d.gameStats.getcScoreTotal()));
+        scoreNum.setFont(new Font("Arial", Font.PLAIN, 14));
+        scoreNum.setBounds(180, 130, 300, 30);
         averageWords = new JLabel("Average Words");
         averageWords.setFont(new Font("Arial", Font.BOLD, 14));
         averageWords.setBounds(10, 170, 120, 30);
+        foundNum = new JLabel(d.gameStats.getAverageWords() + "\t \t \t \t \t \t \t" +
+                "\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t" +
+                d.gameStats.getcAverageWords());
+        foundNum.setFont(new Font("Arial", Font.PLAIN, 14));
+        foundNum.setBounds(180, 170, 300, 30);
         thanks = new JLabel("Thanks for Playing!");
         thanks.setFont(new Font("Arial", Font.BOLD, 18));
         thanks.setBounds(10, 250, 200, 30);
@@ -225,43 +247,111 @@ public class GUI implements ActionListener {
         frame.add(human);
         frame.add(computer);
         frame.add(totalScore);
+        frame.add(scoreNum);
         frame.add(averageWords);
+        frame.add(foundNum);
         frame.add(thanks);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == startButton){
-
+            InstructionFrame();
         }
         if(e.getSource() == nextButton){
-
+            OptionFrame();
         }
         if(e.getSource() == oneButton){ //button for 5x5 grid
-
+            boardSize = 5;
+            OptionFrame2();
         }
         else if(e.getSource() == twoButton){ //button for 4x4 grid
-
+            boardSize = 4;
+            OptionFrame2();
         }
         if(e.getSource() == oneButton2){ //button for randomly assigning letters to the grid
-
+            BoggleGrid grid = new BoggleGrid(boardSize);
+            grid.initalizeBoard(d.randomizeLetters(boardSize));
+            Map<String, ArrayList<Position>> allWords = new HashMap<String, ArrayList<Position>>();
+            d.findAllWords(allWords, boggleDict, grid);
+            g = grid;
+            w = allWords;
+            t3.setVisible(false);
+            oneButton2.setVisible(false);
+            twoButton2.setVisible(false);
+            frame.setVisible(false);
+            frame.setVisible(true);
+            BoardFrame();
         }
         else if(e.getSource() == twoButton2){ //button for providing own letters to grid
-
+            OptionFrame3();
         }
         if(e.getSource() == confirmButton){
-
+            String word = t6.getText().toUpperCase();
+            if (!(word.length() == boardSize*boardSize)){
+                t6.setText(null);
+            }
+            else{
+                BoggleGrid grid = new BoggleGrid(boardSize);
+                grid.initalizeBoard(word);
+                Map<String, ArrayList<Position>> allWords = new HashMap<String, ArrayList<Position>>();
+                d.findAllWords(allWords, boggleDict, grid);
+                g = grid;
+                w = allWords;
+                enterWords.setVisible(false);
+                t6.setVisible(false);
+                confirmButton.setVisible(false);
+                frame.setVisible(false);
+                frame.setVisible(true);
+                BoardFrame();
+            }
         }
         if(e.getSource() == enterButton){
-
+            String word = t5.getText().toUpperCase();
+            if(word != "" && w.keySet().contains(word) && (!(d.gameStats.getPlayerWords().contains(word)))){
+                d.gameStats.addWord(word, BoggleStats.Player.Human);
+            }
+            t5.setText(null);
         }
         else if(e.getSource() == finishButton){
-
+            d.computerMove(w);
+            t4.setVisible(false);
+            label3.setVisible(false);
+            t5.setVisible(false);
+            enterButton.setVisible(false);
+            finishButton.setVisible(false);
+            frame.setVisible(false);
+            frame.setVisible(true);
+            EndRoundFrame();
         }
         if(e.getSource() == yesButton){
-
+            roundStats.setVisible(false);
+            human.setVisible(false);
+            computer.setVisible(false);
+            wordsFound.setVisible(false);
+            foundNum.setVisible(false);
+            roundScore.setVisible(false);
+            scoreNum.setVisible(false);
+            playAgain.setVisible(false);
+            yesButton.setVisible(false);
+            noButton.setVisible(false);
+            frame.setVisible(false);
+            frame.setVisible(true);
+            OptionFrame();
         }
         else if(e.getSource() == noButton){
-
+            roundStats.setVisible(false);
+            human.setVisible(false);
+            computer.setVisible(false);
+            wordsFound.setVisible(false);
+            foundNum.setVisible(false);
+            roundScore.setVisible(false);
+            scoreNum.setVisible(false);
+            playAgain.setVisible(false);
+            yesButton.setVisible(false);
+            noButton.setVisible(false);
+            frame.setVisible(false);
+            frame.setVisible(true);
+            EndGameFrame();
         }
 
     }
