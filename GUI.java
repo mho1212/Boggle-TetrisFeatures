@@ -21,6 +21,9 @@ public class GUI implements ActionListener {
     BoggleGrid g = new BoggleGrid(boardSize);
     Dictionary boggleDict = new Dictionary("wordlist.txt");
     Map<String, ArrayList<Position>> w = new HashMap<String, ArrayList<Position>>();
+
+    Boolean set_inverted;
+
     public GUI(){
         FontFactory fontFactory = new FontFactory();
         Scanner s = new Scanner(System.in);
@@ -33,21 +36,46 @@ public class GUI implements ActionListener {
         }
         font = fontFactory.createFont(word);
 
+        Scanner x = new Scanner(System.in);
+        System.out.println("Choose to invert colors: (Yes or No)");
+        String choice = x.nextLine();
+        while(!Objects.equals(choice, "Yes") && !Objects.equals(choice, "No")){
+            System.out.println("Please try again.");
+            choice = x.nextLine();
+        }
+        set_inverted = false;
+
+        if (choice.equals("Yes")) {
+            set_inverted = true;
+        }
+
         frame = new JFrame("Boggle");
         frame.setVisible(true);
         frame.setSize(600,400);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
+        if (set_inverted) {
+            frame.getContentPane().setBackground(Color.black);
+        }
 
         label = new JLabel("Welcome to Boggle!");
         label.setFont(new Font(font.getName(), Font.BOLD, 18));
         label.setBounds(10, 0, 300 ,30);
-
+        if (set_inverted) {
+            label.setForeground(Color.red);
+        }
         startButton = new JButton("Start Game");
         startButton.setFont(new Font(font.getName(), Font.PLAIN, 12));
         startButton.setBounds(10, 100, 150, 30);
+        if (set_inverted) {
+            startButton.setBackground(Color.black);
+            startButton.setForeground(Color.red);
+            startButton.setOpaque(true);
+            startButton.setBorderPainted(false);
+        }
         startButton.addActionListener(this);
+
 
         frame.add(label);
         frame.add(startButton);
@@ -82,6 +110,15 @@ public class GUI implements ActionListener {
         frame.add(label2);
         frame.add(t);
         frame.add(nextButton);
+        if (set_inverted) {
+            label2.setForeground(Color.red);
+            t.setBackground(Color.black);
+            t.setForeground(Color.red);
+            nextButton.setForeground(Color.red);
+            nextButton.setBackground(Color.black);
+            nextButton.setOpaque(true);
+            nextButton.setBorderPainted(false);
+        }
     }
     public void OptionFrame(){
         label2.setVisible(false);
@@ -93,16 +130,29 @@ public class GUI implements ActionListener {
         t2.setFont(new Font(font.getName(), Font.PLAIN, 14));
         t2.setBounds(10, 10, 500, 30);
         oneButton = new JButton("1");
-        oneButton.setFont(new Font(font.getName(), Font.PLAIN, 12));
-        oneButton.setBounds(10 , 50, 50, 30);
+        oneButton.setFont(new Font(font.getName(), Font.PLAIN, 16));
+        oneButton.setBounds(10 , 50, 100, 60);
         oneButton.addActionListener(this);
         twoButton = new JButton("2");
-        twoButton.setFont(new Font(font.getName(), Font.PLAIN, 12));
-        twoButton.setBounds(70 , 50, 50, 30);
+        twoButton.setFont(new Font(font.getName(), Font.PLAIN, 16));
+        twoButton.setBounds(70 , 50, 100, 60);
         twoButton.addActionListener(this);
         frame.add(t2);
         frame.add(oneButton);
         frame.add(twoButton);
+        if (set_inverted) {
+            label2.setForeground(Color.red);
+            t2.setBackground(Color.black);
+            t2.setForeground(Color.red);
+            oneButton.setForeground(Color.red);
+            oneButton.setBackground(Color.black);
+            oneButton.setOpaque(true);
+            oneButton.setBorderPainted(false);
+            twoButton.setForeground(Color.red);
+            twoButton.setBackground(Color.black);
+            twoButton.setOpaque(true);
+            twoButton.setBorderPainted(false);
+        }
     }
     public void OptionFrame2(){
         t2.setVisible(false);
@@ -114,16 +164,28 @@ public class GUI implements ActionListener {
         t3.setFont(new Font(font.getName(), Font.PLAIN, 14));
         t3.setBounds(10, 10, 500, 30);
         oneButton2 = new JButton("1");
-        oneButton2.setFont(new Font(font.getName(), Font.PLAIN, 12));
-        oneButton2.setBounds(10 , 50, 50, 30);
+        oneButton2.setFont(new Font(font.getName(), Font.PLAIN, 16));
+        oneButton2.setBounds(10 , 50, 100, 60);
         oneButton2.addActionListener(this);
         twoButton2 = new JButton("2");
-        twoButton2.setFont(new Font(font.getName(), Font.PLAIN, 12));
-        twoButton2.setBounds(70 , 50, 50, 30);
+        twoButton2.setFont(new Font(font.getName(), Font.PLAIN, 16));
+        twoButton2.setBounds(70 , 50, 100, 60);
         twoButton2.addActionListener(this);
         frame.add(t3);
         frame.add(oneButton2);
         frame.add(twoButton2);
+        if (set_inverted) {
+            t3.setBackground(Color.black);
+            t3.setForeground(Color.red);
+            oneButton2.setForeground(Color.red);
+            oneButton2.setBackground(Color.black);
+            oneButton2.setOpaque(true);
+            oneButton2.setBorderPainted(false);
+            twoButton2.setForeground(Color.red);
+            twoButton2.setBackground(Color.black);
+            twoButton2.setOpaque(true);
+            twoButton2.setBorderPainted(false);
+        }
     }
     public void OptionFrame3(){
         t3.setVisible(false);
@@ -149,6 +211,16 @@ public class GUI implements ActionListener {
         frame.add(enterWords);
         frame.add(t6);
         frame.add(confirmButton);
+        if (set_inverted) {
+            enterWords.setForeground(Color.red);
+            enterWords.setBackground(Color.black);
+            t6.setBackground(Color.red);
+            t6.setForeground(Color.black);
+            confirmButton.setForeground(Color.red);
+            confirmButton.setBackground(Color.black);
+            confirmButton.setOpaque(true);
+            confirmButton.setBorderPainted(false);
+        }
     }
     public void BoardFrame(){
         t4 = new JTextArea(g.toString());
@@ -173,6 +245,21 @@ public class GUI implements ActionListener {
         frame.add(t5);
         frame.add(enterButton);
         frame.add(finishButton);
+        if (set_inverted) {
+            label3.setForeground(Color.red);
+            t4.setBackground(Color.black);
+            t4.setForeground(Color.red);
+            t5.setBackground(Color.red);
+            t5.setForeground(Color.black);
+            enterButton.setForeground(Color.red);
+            enterButton.setBackground(Color.black);
+            enterButton.setOpaque(true);
+            enterButton.setBorderPainted(false);
+            finishButton.setForeground(Color.red);
+            finishButton.setBackground(Color.black);
+            finishButton.setOpaque(true);
+            finishButton.setBorderPainted(false);
+        }
     }
     public void EndRoundFrame(){
         roundStats = new JLabel("Round Stats");
@@ -222,6 +309,24 @@ public class GUI implements ActionListener {
         frame.add(yesButton);
         frame.add(noButton);
         d.gameStats.endRound();
+        if (set_inverted) {
+            roundStats.setForeground(Color.red);
+            human.setForeground(Color.red);
+            computer.setForeground(Color.red);
+            wordsFound.setForeground(Color.red);
+            foundNum.setForeground(Color.red);
+            roundScore.setForeground(Color.red);
+            scoreNum.setForeground(Color.red);
+            playAgain.setForeground(Color.red);
+            yesButton.setForeground(Color.red);
+            yesButton.setBackground(Color.black);
+            yesButton.setOpaque(true);
+            yesButton.setBorderPainted(false);
+            noButton.setForeground(Color.red);
+            noButton.setBackground(Color.black);
+            noButton.setOpaque(true);
+            noButton.setBorderPainted(false);
+        }
     }
     public void EndGameFrame(){
         gameStats = new JLabel("Game Stats");
@@ -264,6 +369,17 @@ public class GUI implements ActionListener {
         frame.add(averageWords);
         frame.add(foundNum);
         frame.add(thanks);
+        if (set_inverted) {
+            gameStats.setForeground(Color.red);
+            rounds.setForeground(Color.red);
+            human.setForeground(Color.red);
+            computer.setForeground(Color.red);
+            totalScore.setForeground(Color.red);
+            scoreNum.setForeground(Color.red);
+            averageWords.setForeground(Color.red);
+            foundNum.setForeground(Color.red);
+            thanks.setForeground(Color.red);
+        }
     }
     @Override
     public void actionPerformed(ActionEvent e) {
